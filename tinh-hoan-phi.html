@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Máy Tính Hoàn Phí – Getbackcom.online</title>
+<meta name="description" content="Công cụ ước tính mức hoàn phí giao dịch Crypto & Forex tại Getbackcom.online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+	--bg: #FAF8F5;
+	--card: #FFFFFF;
+	--soft: #F5F1EA;
+	--deep: #0f172a;
+	--accent: #FDB022;
+	--accent-bright: #FFDD0A;
+	--text: #101828;
+	--muted: #475467;
+	--border: rgba(15, 23, 42, 0.14);
+	--green: #16a34a;
+	--red: #dc2626;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+	font-family: 'Inter', sans-serif;
+	background: var(--bg);
+	color: var(--text);
+	min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* Header - giống index */
+.site-header {
+	background: var(--deep);
+	padding: 12px 20px;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+
+.site-header .inner {
+	max-width: 1230px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.site-header .logo {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.site-header .logo img {
+	height: 44px;
+	width: 44px;
+	object-fit: contain;
+}
+
+.site-header .logo span {
+	color: #fff;
+	font-size: 18px;
+	font-weight: 700;
+	font-family: 'Inter', sans-serif;
+}
+
+.site-header .back-link {
+	color: rgba(255,255,255,0.85);
+	font-size: 14px;
+	font-weight: 500;
+	transition: color .2s;
+}
+
+.site-header .back-link:hover { color: var(--accent-bright); }
+
+.site-header .btn-contact {
+	background: #fff;
+	color: var(--deep);
+	padding: 10px 20px;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 14px;
+	transition: all .25s;
+}
+
+.site-header .btn-contact:hover {
+	background: var(--accent-bright);
+	transform: translateY(-1px);
+}
+
+/* Hero */
+.hero {
+	padding: 56px 20px 32px;
+	text-align: center;
+	max-width: 820px;
+	margin: 0 auto;
+	opacity: 0;
+	transform: translateY(24px);
+	animation: fadeUp .9s ease forwards;
+}
+
+.hero-icon {
+	width: 64px;
+	height: 64px;
+	margin: 0 auto 20px;
+	border-radius: 16px;
+	background: var(--deep);
+	color: var(--accent-bright);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 28px;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+}
+
+.hero h1 {
+	font-family: 'Poppins', sans-serif;
+	font-size: clamp(28px, 4vw, 42px);
+	font-weight: 700;
+	line-height: 1.2;
+	margin-bottom: 12px;
+	color: var(--text);
+}
+
+.hero h1 span { color: var(--accent); }
+
+.hero p {
+	font-size: 16px;
+	line-height: 1.7;
+	color: #000;
+	max-width: 620px;
+	margin: 0 auto 28px;
+}
+
+.hero p strong { color: #000; }
+
+.hero-note {
+	font-size: 14px;
+	line-height: 1.6;
+	color: #000;
+	max-width: 560px;
+	margin: -12px auto 28px;
+	padding: 12px 18px;
+	background: #FAF8F5;
+	border-radius: 10px;
+	border: 2px solid #000;
+}
+
+.steps-indicator {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.step-dot {
+	height: 6px;
+	width: 32px;
+	border-radius: 999px;
+	background: rgba(15, 23, 42, 0.12);
+	transition: all .3s;
+}
+
+.step-dot.active { width: 48px; background: var(--accent); }
+.step-dot.done { background: var(--deep); }
+
+/* Wizard */
+.wizard {
+	max-width: 780px;
+	margin: 0 auto;
+	padding: 0 20px 80px;
+}
+
+.wizard-card {
+	background: var(--card);
+	border: 2px solid #000;
+	border-radius: 16px;
+	padding: 36px 32px;
+	box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+	opacity: 0;
+	transform: translateY(20px);
+	animation: fadeUp .85s ease .15s forwards;
+}
+
+.step-label {
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	color: var(--accent);
+	margin-bottom: 8px;
+}
+
+.step-title {
+	font-family: 'Poppins', sans-serif;
+	font-size: clamp(22px, 3vw, 30px);
+	font-weight: 700;
+	margin-bottom: 8px;
+	color: var(--text);
+}
+
+.step-desc {
+	font-size: 15px;
+	color: #000;
+	margin-bottom: 24px;
+	line-height: 1.6;
+}
+
+.option-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	margin-bottom: 12px;
+}
+
+.option-btn {
+	background: var(--soft);
+	border: 2px solid var(--border);
+	border-radius: 12px;
+	padding: 16px 10px;
+	text-align: center;
+	cursor: pointer;
+	transition: all .22s;
+	font-family: 'Inter', sans-serif;
+	font-weight: 700;
+	font-size: 18px;
+	color: var(--text);
+}
+
+.option-btn:hover {
+	border-color: var(--deep);
+	background: #fff;
+}
+
+.option-btn.selected {
+	border-color: var(--deep);
+	background: var(--accent-bright);
+	color: var(--deep);
+	box-shadow: 0 0 0 1px var(--deep);
+}
+
+.option-btn .sub {
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	font-weight: 500;
+	color: #000;
+}
+
+.option-btn.selected .sub { color: #000; }
+
+.custom-input-wrap { display: none; margin-bottom: 12px; }
+.custom-input-wrap.show { display: block; }
+
+.custom-input {
+	width: 100%;
+	background: #fff;
+	border: 2px solid var(--border);
+	border-radius: 10px;
+	padding: 12px 16px;
+	font-family: 'Inter', sans-serif;
+	font-size: 16px;
+	color: var(--text);
+	outline: none;
+}
+
+.custom-input:focus { border-color: var(--deep); }
+
+.exch-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+
+.exch-btn {
+	background: var(--soft);
+	border: 2px solid var(--border);
+	border-radius: 12px;
+	padding: 12px 16px;
+	cursor: pointer;
+	transition: all .22s;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.exch-btn:hover { border-color: var(--deep); background: #fff; }
+
+.exch-btn.selected {
+	border-color: var(--deep);
+	background: var(--accent-bright);
+	box-shadow: 0 0 0 1px var(--deep);
+}
+
+.exch-logo {
+	width: 52px;
+	height: 52px;
+	border-radius: 12px;
+	overflow: hidden;
+	flex-shrink: 0;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--border);
+	padding: 6px;
+}
+
+.exch-logo img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	image-rendering: -webkit-optimize-contrast;
+}
+
+.exch-name {
+	font-weight: 700;
+	font-size: 17px;
+	color: var(--text);
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.exch-tag {
+	display: inline-block;
+	font-size: 11px;
+	font-weight: 700;
+	padding: 2px 8px;
+	background: var(--deep);
+	color: var(--accent-bright);
+	border-radius: 999px;
+}
+
+.exch-meta {
+	font-size: 13px;
+	color: #000;
+	margin-top: 2px;
+}
+
+.exch-meta strong { color: #000; }
+
+.exch-register {
+	display: block;
+	margin-top: 8px;
+	padding: 8px 10px;
+	background: #FAF8F5;
+	border: 2px solid #000;
+	border-radius: 10px;
+	font-size: 12px;
+	font-weight: 600;
+	color: #000;
+	text-align: center;
+	text-decoration: none;
+	transition: background 0.2s ease;
+}
+
+.exch-register:hover {
+	background: #F5F1EA;
+	color: #000;
+}
+
+.leverage-wrap { display: none; margin-top: 16px; }
+.leverage-wrap.show { display: block; }
+
+.leverage-label {
+	font-size: 14px;
+	color: #000;
+	margin-bottom: 10px;
+	font-weight: 600;
+}
+
+.btn-row { display: flex; gap: 10px; margin-top: 24px; }
+
+.btn-primary,
+.btn-secondary {
+	flex: 1;
+	padding: 13px 18px;
+	border-radius: 10px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 600;
+	font-size: 15px;
+	cursor: pointer;
+	transition: all .25s;
+	border: 2px solid transparent;
+}
+
+.btn-primary {
+	background: var(--deep);
+	color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+	background: var(--accent-bright);
+	color: var(--deep);
+}
+
+.btn-primary:disabled {
+	opacity: .45;
+	cursor: not-allowed;
+}
+
+.btn-secondary {
+	background: #fff;
+	border-color: var(--border);
+	color: var(--text);
+}
+
+.btn-secondary:hover {
+	border-color: var(--deep);
+	background: var(--soft);
+}
+
+/* Results */
+.result-card {
+	background: var(--soft);
+	border: 2px solid var(--deep);
+	border-radius: 14px;
+	padding: 28px 20px;
+	text-align: center;
+	margin-bottom: 16px;
+}
+
+.result-label {
+	font-size: 13px;
+	color: #000;
+	text-transform: uppercase;
+	letter-spacing: .06em;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.result-amount {
+	font-family: 'Poppins', sans-serif;
+	font-size: clamp(40px, 8vw, 64px);
+	font-weight: 700;
+	color: var(--deep);
+	line-height: 1;
+	margin-bottom: 4px;
+}
+
+.result-unit { font-size: 14px; color: #000; }
+
+.result-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	margin-bottom: 16px;
+}
+
+.result-item {
+	border-radius: 12px;
+	padding: 14px 10px;
+	text-align: center;
+	border: 1px solid var(--border);
+	background: #fff;
+}
+
+.result-item-label {
+	font-size: 11px;
+	color: #000;
+	text-transform: uppercase;
+	letter-spacing: .05em;
+	margin-bottom: 6px;
+}
+
+.result-item-val {
+	font-weight: 700;
+	font-size: 18px;
+	color: var(--text);
+}
+
+.result-item-val.red { color: var(--red); }
+.result-item-val.green { color: var(--green); }
+.result-item-val.gold { color: var(--accent); }
+
+.result-summary {
+	font-size: 14px;
+	color: var(--text);
+	line-height: 1.8;
+	text-align: center;
+	margin-bottom: 14px;
+	padding: 14px 16px;
+	background: var(--soft);
+	border-radius: 10px;
+	border: 1px solid var(--border);
+}
+
+.result-disclaimer {
+	font-size: 13px;
+	color: #000;
+	line-height: 1.6;
+	text-align: center;
+	margin-bottom: 20px;
+	padding: 12px 14px;
+	background: #FAF8F5;
+	border-radius: 10px;
+	border: 2px solid #000;
+}
+
+.result-disclaimer strong { color: #000; }
+
+.btn-cta {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	padding: 14px 20px;
+	border-radius: 10px;
+	background: #FAF8F5;
+	color: #000;
+	font-weight: 600;
+	font-size: 15px;
+	border: 2px solid #000;
+	cursor: pointer;
+	transition: all .25s;
+	text-decoration: none;
+}
+
+.btn-cta:hover {
+	background: #F5F1EA;
+	color: #000;
+}
+
+.btn-reset {
+	margin-top: 10px;
+	width: 100%;
+	padding: 12px;
+	border-radius: 10px;
+	border: 2px solid var(--border);
+	background: #fff;
+	color: #000;
+	font-size: 14px;
+	cursor: pointer;
+	transition: all .2s;
+}
+
+.btn-reset:hover { border-color: var(--deep); color: var(--text); }
+
+.wizard-step {
+	display: none;
+	animation: fadeIn .45s ease;
+}
+
+.wizard-step.active { display: block; }
+
+@keyframes fadeUp {
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(8px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+	.wizard-card { padding: 24px 18px; }
+	.option-grid { grid-template-columns: repeat(2, 1fr); }
+	.result-grid { grid-template-columns: 1fr; }
+	.btn-row { flex-direction: column; }
+	.site-header .back-link { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+	<div class="inner">
+		<a href="index.html" class="logo">
+			<img src="./assets/Logo Chuẩn.png" alt="Getbackcom">
+			<span>GetBackCom</span>
+		</a>
+		<a href="index.html" class="back-link">← Quay lại trang chủ</a>
+		<a href="index.html#contact_footer_widget-2" class="btn-contact">Liên hệ</a>
+	</div>
+</header>
+
+<section class="hero">
+	<div class="hero-icon">🧮</div>
+	<h1>Máy Tính <span>Hoàn Phí</span></h1>
+	<p>Công cụ ước tính số tiền phí và mức hoàn phí bạn có thể nhận lại khi giao dịch qua <strong>Getbackcom.online</strong>.</p>
+	<p class="hero-note">Mọi số liệu chỉ mang tính tham khảo, được trình bày để bạn dễ hình dung cách hoàn phí được tính và vận hành.</p>
+	<div class="steps-indicator">
+		<div class="step-dot active" id="dot-0"></div>
+		<div class="step-dot" id="dot-1"></div>
+		<div class="step-dot" id="dot-2"></div>
+		<div class="step-dot" id="dot-3"></div>
+		<div class="step-dot" id="dot-4"></div>
+	</div>
+</section>
+
+<div class="wizard">
+	<div class="wizard-card">
+
+		<div class="wizard-step active" id="step-0">
+			<div class="step-label">Bước 1 / 5</div>
+			<div class="step-title">Vốn Giao Dịch Của Bạn?</div>
+			<div class="step-desc">Nhập tổng vốn bạn dùng để giao dịch (USD).</div>
+			<div class="option-grid">
+				<div class="option-btn" data-capital="10">$10<span class="sub">Thử nghiệm</span></div>
+				<div class="option-btn" data-capital="50">$50<span class="sub">Nhỏ</span></div>
+				<div class="option-btn" data-capital="100">$100<span class="sub">Cơ bản</span></div>
+				<div class="option-btn" data-capital="500">$500<span class="sub">Trung bình</span></div>
+				<div class="option-btn" data-capital="1000">$1,000<span class="sub">Khá</span></div>
+				<div class="option-btn" id="btn-custom-capital">Nhập khác<span class="sub">Tùy chỉnh</span></div>
+			</div>
+			<div class="custom-input-wrap" id="custom-capital-wrap">
+				<input class="custom-input" type="number" id="custom-capital" placeholder="Nhập số vốn (USD)..." min="1">
+			</div>
+			<div class="btn-row"><button class="btn-primary" id="btn-0" disabled>Tiếp theo →</button></div>
+		</div>
+
+		<div class="wizard-step" id="step-1">
+			<div class="step-label">Bước 2 / 5</div>
+			<div class="step-title">Tần Suất Giao Dịch?</div>
+			<div class="step-desc">Bạn thường giao dịch bao nhiêu lần?</div>
+			<div class="option-grid" style="grid-template-columns:1fr 1fr;">
+				<div class="option-btn" data-freq="0.214">Hiếm khi<span class="sub">1–2 lần / tuần</span></div>
+				<div class="option-btn" data-freq="1.5">Bình thường<span class="sub">1–2 lần / ngày</span></div>
+				<div class="option-btn" data-freq="5">Thường xuyên<span class="sub">5 lần / ngày</span></div>
+				<div class="option-btn" data-freq="10">Tích cực<span class="sub">10+ lần / ngày</span></div>
+			</div>
+			<div class="btn-row">
+				<button class="btn-secondary" data-goto="0">← Quay lại</button>
+				<button class="btn-primary" id="btn-1" disabled>Tiếp theo →</button>
+			</div>
+		</div>
+
+		<div class="wizard-step" id="step-2">
+			<div class="step-label">Bước 3 / 5</div>
+			<div class="step-title">Chọn Sàn Giao Dịch</div>
+			<div class="step-desc">Mỗi sàn có mức phí và hoàn phí khác nhau.</div>
+			<div class="exch-list" id="exch-list"></div>
+			<div class="btn-row">
+				<button class="btn-secondary" data-goto="1">← Quay lại</button>
+				<button class="btn-primary" id="btn-2" disabled>Tiếp theo →</button>
+			</div>
+		</div>
+
+		<div class="wizard-step" id="step-3">
+			<div class="step-label">Bước 4 / 5</div>
+			<div class="step-title">Loại Giao Dịch</div>
+			<div class="step-desc">Bạn giao dịch Spot hay Futures?</div>
+			<div class="option-grid" style="grid-template-columns:1fr 1fr;">
+				<div class="option-btn" data-type="spot">Spot<span class="sub">Giao ngay</span></div>
+				<div class="option-btn" data-type="futures">Futures<span class="sub">Hợp đồng</span></div>
+			</div>
+			<div class="leverage-wrap" id="leverage-wrap">
+				<div class="leverage-label">Chọn đòn bẩy:</div>
+				<div class="option-grid" style="grid-template-columns:repeat(4,1fr);">
+					<div class="option-btn" data-lev="5">x5</div>
+					<div class="option-btn" data-lev="10">x10</div>
+					<div class="option-btn" data-lev="20">x20</div>
+					<div class="option-btn" data-lev="50">x50</div>
+				</div>
+			</div>
+			<div class="btn-row">
+				<button class="btn-secondary" data-goto="2">← Quay lại</button>
+				<button class="btn-primary" id="btn-3" disabled>Xem kết quả →</button>
+			</div>
+		</div>
+
+		<div class="wizard-step" id="step-4">
+			<div class="step-label">Kết Quả Ước Tính</div>
+			<div class="step-title">Bạn Sẽ Nhận Lại</div>
+			<div class="result-card">
+				<div class="result-label">Hoàn phí mỗi tháng</div>
+				<div class="result-amount" id="res-monthly">$0</div>
+				<div class="result-unit">USD / tháng</div>
+			</div>
+			<div class="result-grid">
+				<div class="result-item">
+					<div class="result-item-label">Phí phải trả</div>
+					<div class="result-item-val red" id="res-fee">$0</div>
+				</div>
+				<div class="result-item">
+					<div class="result-item-label">Hoàn phí nhận lại</div>
+					<div class="result-item-val gold" id="res-rebate">$0</div>
+				</div>
+				<div class="result-item">
+					<div class="result-item-label">Bạn tối ưu được</div>
+					<div class="result-item-val green" id="res-saved">$0</div>
+				</div>
+			</div>
+			<div class="result-summary" id="res-summary"></div>
+			<div class="result-disclaimer">
+				<strong>Lưu ý:</strong> Kết quả trên chỉ mang tính minh họa, không phải cam kết số tiền thực nhận. Mức hoàn phí thực tế phụ thuộc khối lượng giao dịch và chính sách của từng sàn.
+			</div>
+			<a id="btn-cta" href="index.html#list-cat-trading-floors" class="btn-cta">Đăng kí sàn</a>
+			<button class="btn-reset" type="button" id="btn-reset">↺ Tính lại từ đầu</button>
+		</div>
+
+	</div>
+</div>
+
+<script>
+const EX = [
+	{ key: 'binance', name: 'Binance', category: 'crypto', spotFee: 0.001, futFee: 0.0005, rebate: 0.20, logo: './logo sàn/Binance.png', link: 'https://www.binance.com/register?ref=ONLYFARM' },
+	{ key: 'okx', name: 'OKX', category: 'crypto', spotFee: 0.001, futFee: 0.0005, rebate: 0.45, logo: './logo sàn/OKX.png', link: 'https://okx.com/join/ONLYBC' },
+	{ key: 'bingx', name: 'BingX', category: 'crypto', spotFee: 0.001, futFee: 0.0005, rebate: 0.45, logo: './logo sàn/BingX.png', link: 'https://bingx.com/invite/1CCSCGWT/' },
+	{ key: 'mexc', name: 'MEXC', category: 'crypto', spotFee: 0.0005, futFee: 0.0005, rebate: 0.45, logo: './logo sàn/Mexc.jpg', link: 'https://www.mexc.co/vi-VN/?shareCode=mexc-GETBC' },
+	{ key: 'gate', name: 'Gate.io', category: 'crypto', spotFee: 0.002, futFee: 0.0005, rebate: 0.45, logo: './logo sàn/Gate.png', link: 'https://www.gate.com/share/GETBACKC' },
+	{ key: 'bitget', name: 'Bitget', category: 'crypto', spotFee: 0.0008, futFee: 0.0006, rebate: 0.45, logo: './logo sàn/Bitget.png', link: 'https://partner.bitget.com/bg/GETBC' },
+	{ key: 'bybit', name: 'Bybit', category: 'crypto', spotFee: 0.001, futFee: 0.0005, rebate: 0.45, logo: './logo sàn/Bybit.png', link: 'https://partner.bybit.com/b/onlyfarm' },
+	{ key: 'xm', name: 'XM', category: 'forex', spotFee: 0.0008, futFee: 0.001, rebate: 0.90, logo: './logo sàn/XM.jpg', link: 'https://clicks.pipaffiliates.com/c?c=1215293&l=vi&p=1' },
+	{ key: 'vantage', name: 'Vantage', category: 'forex', spotFee: 0.001, futFee: 0.0012, rebate: 1.0, logo: './logo sàn/vantage.png', link: 'https://vigco.co/la-com-inv/vi/D9BUHrjn' }
+];
+
+const S = { capital: null, freq: null, exchange: null, type: null, lev: null };
+
+function renderExchanges() {
+	const list = document.getElementById('exch-list');
+	list.innerHTML = EX.map(function(e) {
+		var tag = e.category === 'forex' ? '<span class="exch-tag">Forex</span>' : '';
+		return '<div class="exch-btn" data-key="' + e.key + '">' +
+			'<div class="exch-logo"><img src="' + e.logo + '" alt="' + e.name + '" onerror="this.style.display=\'none\'"></div>' +
+			'<div><div class="exch-name">' + e.name + tag + '</div>' +
+			'<div class="exch-meta">Hoàn phí ước tính: <strong>' + Math.round(e.rebate * 100) + '%</strong></div>' +
+			'<a class="exch-register" href="' + e.link + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Đăng kí sàn</a></div></div>';
+	}).join('');
+}
+
+function updateStep3UI() {
+	var ex = S.exchange;
+	var spotBtn = document.querySelector('[data-type="spot"]');
+	var futBtn = document.querySelector('[data-type="futures"]');
+	var title = document.querySelector('#step-3 .step-title');
+	var desc = document.querySelector('#step-3 .step-desc');
+	if (ex && ex.category === 'forex') {
+		title.textContent = 'Loại Giao Dịch Forex';
+		desc.textContent = 'Bạn giao dịch cặp Forex hay Vàng (XAUUSD)?';
+		spotBtn.innerHTML = 'Forex<span class="sub">Cặp tiền tệ</span>';
+		futBtn.innerHTML = 'Vàng (XAUUSD)<span class="sub">CFD</span>';
+	} else {
+		title.textContent = 'Loại Giao Dịch';
+		desc.textContent = 'Bạn giao dịch Spot hay Futures?';
+		spotBtn.innerHTML = 'Spot<span class="sub">Giao ngay</span>';
+		futBtn.innerHTML = 'Futures<span class="sub">Hợp đồng</span>';
+	}
+}
+
+function goStep(n) {
+	document.querySelectorAll('.wizard-step').forEach(function(el, i) {
+		el.classList.toggle('active', i === n);
+	});
+	for (var i = 0; i < 5; i++) {
+		var dot = document.getElementById('dot-' + i);
+		dot.className = 'step-dot' + (i === n ? ' active' : i < n ? ' done' : '');
+	}
+	if (n === 4) calcResult();
+	if (n === 3) updateStep3UI();
+	window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function clearSelected(container, selector) {
+	container.querySelectorAll(selector).forEach(function(el) { el.classList.remove('selected'); });
+}
+
+function calcResult() {
+	var capital = S.capital, freq = S.freq, exchange = S.exchange, type = S.type, lev = S.lev;
+	var tradesPerMonth = freq * 30;
+	var feeRate = type === 'futures' ? exchange.futFee : exchange.spotFee;
+	var isForex = exchange.category === 'forex';
+	var tradeSize = (!isForex && type === 'futures') ? capital * (lev || 1) : capital;
+	var volume = tradeSize * tradesPerMonth;
+	var totalFee = volume * feeRate;
+	var rebate = totalFee * exchange.rebate;
+	var fmt = function(n) {
+		return n >= 1000 ? '$' + Math.round(n).toLocaleString('en') : '$' + n.toFixed(2);
+	};
+	document.getElementById('res-monthly').textContent = fmt(rebate);
+	document.getElementById('res-fee').textContent = fmt(totalFee);
+	document.getElementById('res-rebate').textContent = fmt(rebate);
+	document.getElementById('res-saved').textContent = fmt(rebate);
+	var freqLabel = freq >= 10 ? 'Tích cực (10+ lần/ngày)' : freq >= 5 ? 'Thường xuyên (5 lần/ngày)' : freq >= 1 ? 'Bình thường (1–2 lần/ngày)' : 'Hiếm khi (1–2 lần/tuần)';
+	var typeLabel;
+	if (isForex) {
+		typeLabel = type === 'futures' ? 'Vàng (XAUUSD)' : 'Forex';
+	} else {
+		typeLabel = type === 'futures' ? 'Futures x' + lev : 'Spot';
+	}
+	document.getElementById('res-summary').innerHTML =
+		'Vốn: <strong>' + fmt(capital) + '</strong> · Sàn: <strong>' + exchange.name + '</strong> · Loại: <strong>' + typeLabel + '</strong> · Tần suất: <strong>' + freqLabel + '</strong>';
+	document.getElementById('btn-cta').href = exchange.link || 'index.html#list-cat-trading-floors';
+	document.getElementById('btn-cta').target = '_blank';
+	document.getElementById('btn-cta').rel = 'noopener noreferrer';
+	document.getElementById('btn-cta').textContent = 'Đăng kí sàn';
+}
+
+function resetAll() {
+	S.capital = S.freq = S.exchange = S.type = S.lev = null;
+	document.querySelectorAll('.option-btn, .exch-btn').forEach(function(el) { el.classList.remove('selected'); });
+	document.getElementById('custom-capital-wrap').classList.remove('show');
+	document.getElementById('custom-capital').value = '';
+	document.getElementById('leverage-wrap').classList.remove('show');
+	updateStep3UI();
+	['btn-0','btn-1','btn-2','btn-3'].forEach(function(id) { document.getElementById(id).disabled = true; });
+	goStep(0);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	renderExchanges();
+
+	document.querySelectorAll('[data-capital]').forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			clearSelected(document.getElementById('step-0'), '.option-btn');
+			btn.classList.add('selected');
+			document.getElementById('custom-capital-wrap').classList.remove('show');
+			S.capital = parseFloat(btn.getAttribute('data-capital'));
+			document.getElementById('btn-0').disabled = false;
+		});
+	});
+
+	document.getElementById('btn-custom-capital').addEventListener('click', function() {
+		clearSelected(document.getElementById('step-0'), '.option-btn');
+		this.classList.add('selected');
+		document.getElementById('custom-capital-wrap').classList.add('show');
+		S.capital = null;
+		document.getElementById('btn-0').disabled = true;
+		document.getElementById('custom-capital').focus();
+	});
+
+	document.getElementById('custom-capital').addEventListener('input', function() {
+		var v = parseFloat(this.value);
+		S.capital = v > 0 ? v : null;
+		document.getElementById('btn-0').disabled = !S.capital;
+	});
+
+	document.querySelectorAll('[data-freq]').forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			clearSelected(document.getElementById('step-1'), '.option-btn');
+			btn.classList.add('selected');
+			S.freq = parseFloat(btn.getAttribute('data-freq'));
+			document.getElementById('btn-1').disabled = false;
+		});
+	});
+
+	document.getElementById('exch-list').addEventListener('click', function(e) {
+		var btn = e.target.closest('.exch-btn');
+		if (!btn) return;
+		clearSelected(document.getElementById('step-2'), '.exch-btn');
+		btn.classList.add('selected');
+		S.exchange = EX.find(function(x) { return x.key === btn.getAttribute('data-key'); });
+		S.type = S.lev = null;
+		clearSelected(document.getElementById('step-3'), '[data-type], [data-lev]');
+		document.getElementById('leverage-wrap').classList.remove('show');
+		document.getElementById('btn-3').disabled = true;
+		updateStep3UI();
+		document.getElementById('btn-2').disabled = false;
+	});
+
+	document.querySelectorAll('[data-type]').forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			clearSelected(document.getElementById('step-3'), '[data-type]');
+			btn.classList.add('selected');
+			S.type = btn.getAttribute('data-type');
+			S.lev = null;
+			var lw = document.getElementById('leverage-wrap');
+			var isForex = S.exchange && S.exchange.category === 'forex';
+			if (!isForex && S.type === 'futures') {
+				lw.classList.add('show');
+				document.getElementById('btn-3').disabled = true;
+			} else {
+				lw.classList.remove('show');
+				document.getElementById('btn-3').disabled = false;
+			}
+		});
+	});
+
+	document.querySelectorAll('[data-lev]').forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			clearSelected(document.getElementById('leverage-wrap'), '[data-lev]');
+			btn.classList.add('selected');
+			S.lev = parseFloat(btn.getAttribute('data-lev'));
+			document.getElementById('btn-3').disabled = false;
+		});
+	});
+
+	document.getElementById('btn-0').addEventListener('click', function() { goStep(1); });
+	document.getElementById('btn-1').addEventListener('click', function() { goStep(2); });
+	document.getElementById('btn-2').addEventListener('click', function() { goStep(3); });
+	document.getElementById('btn-3').addEventListener('click', function() { goStep(4); });
+
+	document.querySelectorAll('[data-goto]').forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			goStep(parseInt(btn.getAttribute('data-goto'), 10));
+		});
+	});
+
+	document.getElementById('btn-reset').addEventListener('click', resetAll);
+});
+</script>
+</body>
+</html>
